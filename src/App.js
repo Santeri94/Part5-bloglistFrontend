@@ -115,14 +115,12 @@ const App = () => {
     return(
       <div>
         <Notification message={errorMessage} />
-        <Togglable buttonlabel='login'>
         <LoginForm
         username={username}
         password={password}
         handleUsernameChange={({target}) => setUsername(target.value)}
         handlePasswordChange={({target}) => setPassword(target.value)} 
         handleSubmit={handleLogin}/>
-        </Togglable>
       </div>
     )
   }
@@ -150,4 +148,4 @@ const App = () => {
   )
 }
 
-export default App // untill 5.4 tehty
+export default App // untill 5.6 tehty
