@@ -75,18 +75,55 @@ const App = () => {
       {blogs
         .sort((a,b) => b.likes - a.likes)
         .map(blog =>
-          <Blog key={blog.id} blog={blog}/>)}
+          <Blog key={blog.id} blog={blog} handleLikes={handleLikes} handleRemove={handleRemove}/>)}
     </div>
   )
   const handleNewBlog = async (blogObject) => {
-    blogFormRef.current.toggleVisibility()
-    await blogService.create(blogObject)
-    const returnedBlog = await blogService.getAll()
-    setBlogs(returnedBlog)
-    setErrorMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 5000)}
+    try{
+      blogFormRef.current.toggleVisibility()
+      await blogService.create(blogObject)
+      const returnedBlog = await blogService.getAll()
+      setBlogs(returnedBlog)
+      setErrorMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }catch(exception)  {
+      setErrorMessage('Error when creating blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const handleLikes = async (id, blogToUpdate) => {
+    try {
+      const updatedBlog = await blogService.update(id,blogToUpdate)
+      const newblogs = blogs.map((blog) => blog.id === id ? updatedBlog : blog)
+      setBlogs(newblogs)
+    }catch(exception) {
+      setErrorMessage('Error when updating likes')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const handleRemove = async (id) => {
+    try {
+      blogService.deleteBlog(id)
+      setBlogs(blogs.filter((blog) => blog.id !== id))
+      setErrorMessage('Blog has been deleted')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }catch(exception) {
+      setErrorMessage('Error when deleting blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
 
 
   if (user === null){
@@ -119,4 +156,5 @@ const App = () => {
   )
 }
 
-export default App // ei tehdyt: 5.7,5.8, 5.10
+export default App // ei tehdyt: 5.7,
+// Viimisenä 5.12 -> jatka part c
