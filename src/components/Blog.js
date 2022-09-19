@@ -9,6 +9,16 @@ const Blog = ({ blog,handleLikes,handleRemove }) => {
     marginBottom: 5
   }
 
+  const buttonDelete = {
+    color: 'red',
+    border: 'solid'
+  }
+
+  const buttonLike = {
+    color: 'green',
+    border: 'solid',
+  }
+
   const like = () => {
     const updatedBlog = {
       title: blog.title,
@@ -28,9 +38,9 @@ const Blog = ({ blog,handleLikes,handleRemove }) => {
   }
 
   return (
-    <div style={blogStyle}>
-      {blog.title} {blog.author} {blog.likes} <button onClick={like}>like</button>
-      <button onClick={remove}>delete</button>
+    <div style={blogStyle} className='blog'>
+      {blog.title} {blog.author} {blog.likes} <button style={buttonLike} onClick={like}>like</button> {' '}
+      <button style={buttonDelete} onClick={remove}>delete</button>
     </div>)
 }
 
