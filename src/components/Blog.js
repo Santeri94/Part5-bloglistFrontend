@@ -39,7 +39,10 @@ const Blog = ({ blog,handleLikes,handleRemove }) => {
 
   return (
     <div style={blogStyle} className='blog'>
-      {blog.title} {blog.author} {blog.likes} <button style={buttonLike} onClick={like}>like</button> {' '}
+      <div className="titleAndAuthor">
+        {blog.title} {blog.author}
+      </div>
+        likes: {blog.likes} <button className="likeButton" style={buttonLike} onClick={like}>like</button> {' '}
       <button style={buttonDelete} onClick={remove}>delete</button>
     </div>)
 }

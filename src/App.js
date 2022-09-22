@@ -17,13 +17,13 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>  // haetaan hookeilla dataa servulta
+    blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')  // haetaan serveriltä tietoja hookkien avulla
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -75,7 +75,7 @@ const App = () => {
       {blogs
         .sort((a,b) => b.likes - a.likes)
         .map(blog =>
-          <Blog key={blog.id} blog={blog} handleLikes={handleLikes} handleRemove={handleRemove}/>)}
+          <Blog key={blog.id} blog={blog} handleLikes={handleLikes} handleRemove={handleRemove} />)}
     </div>
   )
   const handleNewBlog = async (blogObject) => {
@@ -101,6 +101,10 @@ const App = () => {
       const updatedBlog = await blogService.update(id,blogToUpdate)
       const newblogs = blogs.map((blog) => blog.id === id ? updatedBlog : blog)
       setBlogs(newblogs)
+      setErrorMessage(`You liked ${updatedBlog.title}`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }catch(exception) {
       setErrorMessage('Error when updating likes')
       setTimeout(() => {
@@ -156,5 +160,5 @@ const App = () => {
   )
 }
 
-export default App // ei tehdyt: 5.7,
-// Viimisenä 5.12 -> jatka part c
+export default App
+
